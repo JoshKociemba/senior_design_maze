@@ -99,51 +99,52 @@ $( document ).ready(function(){
 		}
 	    }
 	    else {
-			canMove = 0;
-		    }
-		    return canMove;
-		}
-			
-			function createTimer(seconds) {
-						intervalVar = setInterval(function () {
-						makeWhite(mazeWidth, 0, canvas.width - mazeWidth, canvas.height);
-						if (seconds === 0) {
-							clearInterval(intervalVar);
-							window.removeEventListener("keydown", moveRect, true);
-							makeWhite(0, 0, canvas.width, canvas.height);
-							context.font = "40px Arial";
-							context.fillStyle = "red";
-							context.textAlign = "center";
-							context.textBaseline = "middle";
-							context.fillText("Carbon Time's Up!", canvas.width / 4, canvas.height / 4);
-							return;
-						}
-						context.font = "20px Arial";
-						if (seconds <= 10 && seconds > 5) {
-							context.fillStyle = "orangered";
-						}
-						else if (seconds <= 5) {
-							context.fillStyle = "red";
-							}
-							else {
-								context.fillStyle = "green";
-							}
-							context.textAlign = "center";
-							context.textBaseline = "middle";
-							var secondsToShow = seconds.toString();
-							context.fillText(secondsToShow, mazeWidth + 20, canvas.height / 7);
-							seconds--;
-					}, 1000);
-				}
+		canMove = 0;
+	    }
+	    return canMove;
+	}
 		
-        function makeWhite(x, y, w, h) {
-            context.beginPath();
-            context.rect(x, y, w, h);
-            context.closePath();
-            context.fillStyle = "white";
-            context.fill();
-        }
-        drawMazeAndRectangle(67, 3);
-        window.addEventListener("keydown", moveRect, true);
-		createTimer(20);
+	function createTimer(seconds) {
+		intervalVar = setInterval(function () {
+			makeWhite(mazeWidth, 0, canvas.width - mazeWidth, canvas.height);
+			if (seconds === 0) {
+				clearInterval(intervalVar);
+				window.removeEventListener("keydown", moveRect, true);
+				makeWhite(0, 0, canvas.width, canvas.height);
+				context.font = "40px Arial";
+				context.fillStyle = "red";
+				context.textAlign = "center";
+				context.textBaseline = "middle";
+				context.fillText("Carbon Time's Up!", canvas.width / 4, canvas.height / 4);
+				return;
+			}
+			context.font = "20px Arial";
+			if (seconds <= 10 && seconds > 5) {
+				context.fillStyle = "orangered";
+			}
+			else if (seconds <= 5) {
+				context.fillStyle = "red";
+			}
+			else {
+				context.fillStyle = "green";
+			}
+			context.textAlign = "center";
+			context.textBaseline = "middle";
+			var secondsToShow = seconds.toString();
+			context.fillText(secondsToShow, mazeWidth + 20, canvas.height / 7);
+			seconds--;
+		}, 1000);
+	}
+
+	function makeWhite(x, y, w, h) {
+		context.beginPath();
+		context.rect(x, y, w, h);
+		context.closePath();
+		context.fillStyle = "white";
+		context.fill();
+	}
+
+	drawMazeAndRectangle(67, 3);
+	window.addEventListener("keydown", moveRect, true);
+	createTimer(20);
 });
