@@ -116,6 +116,7 @@ $( document ).ready(function(){
 				context.textAlign = "center";
 				context.textBaseline = "middle";
 				context.fillText("Carbon Time's Up!", canvas.width / 4, canvas.height / 4);
+				$("#next-url").css("visibility","visible");
 				return;
 			}
 			context.font = "20px Arial";
@@ -147,4 +148,7 @@ $( document ).ready(function(){
 	drawMazeAndRectangle(67, 3);
 	window.addEventListener("keydown", moveRect, true);
 	createTimer(20);
+	// while(1)
+		// if rectangle coordinates == circle coordinates
+			// go to next menu
 });
