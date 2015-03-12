@@ -6,8 +6,12 @@ $( document ).ready(function(){
 	var imagePaths = ["images/spr_glasses_shadow_1.png","images/spr_glasses_shadow_2.png", "images/spr_glasses_shadow_3.png", "images/spr_glasses_shadow_4.png", "images/spr_glasses_shadow_5.png", "images/spr_glasses_shadow_6.png", "images/spr_glasses_shadow_7.png",];
 	var currRectX = 67;
 	var currRectY = 3;
-	var mazeWidth = 250;
+	//maze width must be adjusted to have carbon time show. The background image will cover it otherwise
+	var mazeWidth = 625;
 	var mazeHeight = 250;
+	//maze displacement, used to move player object and end object
+	var mazeDisX = 125;
+	var mazeDisY = 75;
 	var time = true;
 	var frameCount = 0;
 	var intervalVar;
@@ -54,8 +58,8 @@ $( document ).ready(function(){
     }
     
 	function reset() {
-		atom.x = 67;
-		atom.y = 3;
+		atom.x = 67 + mazeDisX;
+		atom.y = 3 + mazeDisY;
 	}
 
 	function render(bool, index){
@@ -66,17 +70,22 @@ $( document ).ready(function(){
 	
 	function drawMazeAndRectangle(rectX, rectY) {
 	    makeWhite(0, 0, canvas.width, canvas.height);
+	    var bgImg = new Image();
+		bgImg.onload = function() {
+		context.drawImage(bgImg, 0, 0);
+		};
+	    bgImg.src = "images/farm_bg.png"
 	    var mazeImg = new Image();
 	    mazeImg.onload = function () {
-		context.drawImage(mazeImg, 0, 0);
+		context.drawImage(mazeImg, mazeDisX, mazeDisY);
 		//drawRectangle(rectX, rectY, "#000001");
 		context.beginPath();
-		context.arc(89, 153, 7, 0, 2 * Math.PI, false);
+		context.arc(89 + mazeDisX, 153 + mazeDisY, 7, 0, 2 * Math.PI, false);
 		context.closePath();
 		context.fillStyle = '#F37321';
 		context.fill();
 	    };
-	    mazeImg.src = "maze.png";
+	    mazeImg.src = "images/maze.png";
 			
 			context.font = "20px Arial";
 			context.fillStyle = "black";
