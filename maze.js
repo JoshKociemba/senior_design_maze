@@ -8,10 +8,10 @@ $( document ).ready(function(){
 	var currRectY = 3;
 	//maze width must be adjusted to have carbon time show. The background image will cover it otherwise
 	var mazeWidth = 625;
-	var mazeHeight = 250;
+	var mazeHeight = 450;
 	//maze displacement, used to move player object and end object
-	var mazeDisX = 125;
-	var mazeDisY = 75;
+	var mazeDisX = 140;
+	var mazeDisY = 25;
 	var time = true;
 	var frameCount = 0;
 	var intervalVar;
@@ -58,8 +58,8 @@ $( document ).ready(function(){
     }
     
 	function reset() {
-		atom.x = 67 + mazeDisX;
-		atom.y = 3 + mazeDisY;
+		atom.x = 110 + mazeDisX;
+		atom.y = 4 + mazeDisY;
 	}
 
 	function render(bool, index){
@@ -77,10 +77,10 @@ $( document ).ready(function(){
 	    bgImg.src = "images/farm_bg.png"
 	    var mazeImg = new Image();
 	    mazeImg.onload = function () {
-		context.drawImage(mazeImg, mazeDisX, mazeDisY);
+		context.drawImage(mazeImg, mazeDisX, mazeDisY, 250, 250);
 		//drawRectangle(rectX, rectY, "#000001");
 		context.beginPath();
-		context.arc(89 + mazeDisX, 153 + mazeDisY, 7, 0, 2 * Math.PI, false);
+		context.arc(137 + mazeDisX, 240 + mazeDisY, 7, 0, 2 * Math.PI, false);
 		context.closePath();
 		context.fillStyle = '#F37321';
 		context.fill();
