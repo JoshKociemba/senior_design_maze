@@ -208,6 +208,7 @@ $( document ).ready(function(){
 				context.textAlign = "center";
 				context.textBaseline = "middle";
 				context.fillText("Carbon Time's Up!", canvas.width / 4, canvas.height / 4);
+				document.getElementByID('next-url').style.visiblity = 'visible';
 				return;
 			}
 			context.font = "20px Arial";
@@ -274,6 +275,6 @@ $( document ).ready(function(){
 	//start the main game loop
 	main();
 	window.addEventListener("keydown", moveRect, true);
-	createTimer(60);
+	createTimer(5);
 	
 });
