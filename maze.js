@@ -1,166 +1,192 @@
 $( document ).ready(function(){	
-	var canvas = document.getElementById("maze-canvas");
-	var sprites = [0, 0, 0, 0, 0, 0, 0];
-	var loaded = false;
+	//Creating game canvas
+	var canvas = document.createElement("canvas");
 	var context = canvas.getContext("2d");
-	var imagePaths = ["images/spr_glasses_shadow_1.png","images/spr_glasses_shadow_2.png", "images/spr_glasses_shadow_3.png", "images/spr_glasses_shadow_4.png", "images/spr_glasses_shadow_5.png", "images/spr_glasses_shadow_6.png", "images/spr_glasses_shadow_7.png",];
-	var currRectX = 67;
-	var currRectY = 3;
-	//maze width must be adjusted to have carbon time show. The background image will cover it otherwise
-	var mazeWidth = 625;
-	var mazeHeight = 450;
-	//maze displacement, used to move player object and end object
-	var mazeDisX = 140;
-	var mazeDisY = 25;
-	var time = true;
-	var frameCount = 0;
-	var intervalVar;
-	//music clip from www.FoolBoyMedia.co.uk
-	var gameOver = new Audio('sounds/game_over.mp3');
-	var bgs = new Audio('sounds/forest_song.wav');
-	bgs.volume = .7;
-	bgs.play();
-	var index = 0
-	var atomSpr = new Image();
-	var sprReady = false
-	atomSpr.onload = function () {sprReady = true;};
-	atomSpr.src = "images/spr_glasses_shadow_2.png";
-	var atom = { speed: 256};
-
-	// Handle keyboard controls   
+	var mazeWidth = 242;
+	var mazeHeight = 242;
+	canvas.width = mazeWidth*2;
+	canvas.height = mazeHeight*2;
+	document.body.appendChild(canvas);
+	
+	//Game Background
+	//function drawMazeAndRectangle(rectX, rectY) {
+	var mazeReady = false;
+	var mazeImage = new Image();
+	mazeImage.onload = function () {
+		mazeReady = true;
+	};
+	mazeImage.src = "maze.png";
+	
+	//Draw character
+	var characterReady = false;
+	var characterImage = new Image();
+	characterImage.onload = function () {
+		characterReady = true;
+	};
+	characterImage.src = "sprite.png";
+	
+	//Question Tile
+	var questionReady = false;
+	var questionImage = new Image();
+	questionImage.onload = function () {
+		questionReady = true;
+	};
+	questionImage.src = "question.png";
+	
+	//Exit Tile
+	var endReady = false;
+	var endImage = new Image();
+	endImage.onload = function () {
+		endReady = true;
+	};
+	endImage.src = "end.png";
+	
+	//Game Objects
+	var character = {
+		speed: 100
+	};
+	var question1 = {};
+	var question2 = {};
+	var question3 = {};
+	var end = {};
+	var questionsHit = 0;
+	
+	//Keyboard Controls
 	var keysDown = {};
-
+	
 	addEventListener("keydown", function (e) {
-	keysDown[e.keyCode] = true;
+		keysDown[e.keyCode] = true;
 	}, false);
 
 	addEventListener("keyup", function (e) {
 		delete keysDown[e.keyCode];
 	}, false);
-
-	loadImages(imagePaths)
 	
-	function loadImages(paths){
-  		paths.forEach(function(path){
-    		var img = new Image;
-    		img.onload = function(){
-      			for(x = 0; x < paths.length; x++){
-      				var sorc = img.src.split('.')
-      				path = paths[x].split('.')
-					if(path[0][path[0].length-1] == sorc[0][sorc[0].length-1]){
-						sprites[x] = img
-					}
-      			}
-      			if (sprites.length==paths.length) loaded = true;
-      		}
-      		img.src = path;
-      	});
-    }
-    
-	function reset() {
-		atom.x = 110 + mazeDisX;
-		atom.y = 4 + mazeDisY;
-	}
-
-	function render(bool, index){
-		if(bool){
-			context.drawImage(sprites[index], atom.x, atom.y, 12, 12);
-		}
-	}
+	//Reset game
+	var reset = function () {
+		character.x = (mazeWidth / 2) - 6;
+		character.y = 2;
+		end.x = (mazeWidth / 2) - 6;
+		end.y = mazeHeight - 14;
+		newquestion();
+	};
 	
-	function drawMazeAndRectangle(rectX, rectY) {
-	    makeWhite(0, 0, canvas.width, canvas.height);
-	    var bgImg = new Image();
-		bgImg.onload = function() {
-		context.drawImage(bgImg, 0, 0);
-		};
-	    bgImg.src = "images/farm_bg.png"
-	    var mazeImg = new Image();
-	    mazeImg.onload = function () {
-		context.drawImage(mazeImg, mazeDisX, mazeDisY, 250, 250);
-		//drawRectangle(rectX, rectY, "#000001");
-		context.beginPath();
-		context.arc(137 + mazeDisX, 240 + mazeDisY, 7, 0, 2 * Math.PI, false);
-		context.closePath();
-		context.fillStyle = '#F37321';
-		context.fill();
-	    };
-	    mazeImg.src = "images/maze.png";
-			
-			context.font = "20px Arial";
-			context.fillStyle = "black";
-			context.textAlign = "center";
-			context.textBaseline = "middle";
-			context.fillText("Carbon: ", mazeWidth - 30, canvas.height / 7);
+		//Randomize question
+	var newquestion = function() {
 		
-	}
-	function drawRectangle(x, y, style) {
-	    makeWhite(currRectX, currRectY, 12, 12);
-	    currRectX = x;
-	    currRectY = y;
-	    context.beginPath();
-	    context.rect(x, y, 12, 12);
-	    context.closePath();
-	    context.fillStyle = style;
-	    context.fill();
-	}
-	function moveRect(e) {
-	    var newX;
-	    var newY;
-	    /*var moving = false;
-	    var movingAllowed;
-	    if (38 in keysDown) { // Player holding up
-			newY -= atom.speed * modifier;
-			moving = true;
+		question1.x = 32 + (Math.random() * (mazeWidth - 64));
+		question1.y = 32 + (Math.random() * (mazeHeight - 64));
+
+		question2.x = 32 + (Math.random() * (mazeWidth - 64));
+		question2.y = 32 + (Math.random() * (mazeHeight - 64));
+
+		question3.x = 32 + (Math.random() * (mazeWidth - 64));
+		question3.y = 32 + (Math.random() * (mazeHeight - 64));
+		
+		//Timer placement and Questions Hit
+		makeWhite(0, 245, mazeWidth, 15);
+		context.fillStyle = "rgb(0, 0, 0)";
+		context.font = "12px Helvetica";
+		context.textAlign = "left";
+		context.textBaseline = "top";
+		context.fillText("Questions Hit: " + questionsHit, 0, 245);
+	};
+	
+	var collisiondetect = function(destX, destY) {
+		var imgData = context.getImageData(destX, destY, 12, 13);
+		var data = imgData.data;
+		var canmove = 1;
+		if (destX >= 0 && destX <= mazeWidth - 12 && destY >= 0 && destY <= mazeHeight - 13) { // check whether the rectangle would move inside the bounds of the canvas
+			for (var i = 0; i < 4 * 12 * 13; i += 4) { // look at all pixels
+				if (data[i] === 0 && data[i + 1] === 0 && data[i + 2] === 0) { // black
+					canmove = 0; // 0 means: the rectangle can't move
+					break;
+				}	
+				else if (data[i] === 0 && data[i + 1] === 255 && data[i + 2] === 0) { // lime: #00FF00
+					canmove = 2; // 2 means: the end point is reached
+					break;
+				}
+			}
 		}
-		if (40 in keysDown) { // Player holding down
-			newY += atom.speed * modifier;
-			moving = true;
+		else {
+			canmove = 0;
 		}
-		if (37 in keysDown) { // Player holding left
-			newX -= atom.speed * modifier;
-			moving = true;
+		
+		makeWhite(0, 265, canvas.width, 15);
+		context.fillStyle = "rgb(0, 0, 0)";
+		context.font = "12px Helvetica";
+		context.textAlign = "left";
+		context.textBaseline = "top";
+		context.fillText("X: " + Math.round(character.x) + "   Y:   " + Math.round(character.y) + "   Can move: " + canmove, 0, 265);
+		
+		return canmove;
+	};
+	
+	var makeWhite = function(x, y, w, h) {
+            context.beginPath();
+            context.rect(x, y, w, h);
+            context.closePath();
+            context.fillStyle = "white";
+            context.fill();
+	};
+	
+	// Update game objects
+	var update = function (modifier) {
+		if (38 in keysDown || 87 in keysDown) { // Player holding up
+			if (collisiondetect(character.x,character.y - character.speed * modifier) == 1) {
+				character.y -= character.speed * modifier;
+			}
 		}
-		if (39 in keysDown) { // Player holding right
-			newX += atom.speed * modifier;
-			moving = true;
+		if (40 in keysDown || 83 in keysDown) { // Player holding down
+			if (collisiondetect(character.x,character.y + character.speed * modifier) == 1) {
+				character.y += character.speed * modifier;
+			}
 		}
-		if(moving){
-			atom.x = newX;
-			atom.y = newY;
-			}*/
-	    var movingAllowed;
-	    e = e || window.event;
-	    switch (e.keyCode) {
-		case 38:   // arrow up key
-		case 87: // W key
-		    newX = atom.x;
-		    newY = atom.y - 3;
-		    break;
-		case 37: // arrow left key
-		case 65: // A key
-		    newX = atom.x - 3;
-		    newY = atom.y;
-		    break;
-		case 40: // arrow down key
-		case 83: // S key
-		    newX = atom.x;
-		    newY = atom.y + 3;
-		    break;
-		case 39: // arrow right key
-		case 68: // D key
-		    newX = atom.x + 3;
-		    newY = atom.y;
-		    break;
-	    }
-	    movingAllowed = canMoveTo(newX, newY);
-	    if (movingAllowed === 1) {      // 1 means 'the rectangle can move'
-	    	makeWhite(atom.x, atom.y, 12, 12);
-			atom.x = newX;
-			atom.y = newY;
-	   	}
-	   	else if (movingAllowed === 2) { // 2 means 'the rectangle reached the end point'
-			clearInterval(intervalVar);
+		if (37 in keysDown || 65 in keysDown) { // Player holding left
+			if(collisiondetect(character.x - character.speed * modifier,character.y) == 1) {
+				character.x -= character.speed * modifier;
+			}
+		}
+		if (39 in keysDown || 68 in keysDown) { // Player holding right
+			if(collisiondetect(character.x + character.speed * modifier,character.y) == 1) {
+				character.x += character.speed * modifier;
+			}
+		}
+		
+		//Collision Detection
+		if (
+			character.x <= (question1.x + 8)
+			&& question1.x <= (character.x + 8)
+			&& character.y <= (question1.y + 8)
+			&& question1.y <= (character.y + 8)
+		) {
+			++questionsHit;
+			newquestion();
+		}
+		if (
+			character.x <= (question2.x + 8)
+			&& question2.x <= (character.x + 8)
+			&& character.y <= (question2.y + 8)
+			&& question2.y <= (character.y + 8)
+		) {
+			++questionsHit;
+			newquestion();
+		}
+		if (
+			character.x <= (question3.x + 8)
+			&& question3.x <= (character.x + 8)
+			&& character.y <= (question3.y + 8)
+			&& question3.y <= (character.y + 8)
+		) {
+			++questionsHit;
+			newquestion();
+		}
+		if (
+			character.x <= (end.x + 8)
+			&& end.x <= (character.x + 8)
+			&& character.y <= (end.y + 8)
+			&& end.y <= (character.y + 8)
+		) {
 			makeWhite(0, 0, canvas.width, canvas.height);
 			context.font = "40px Arial";
 			context.fillStyle = "blue";
@@ -168,113 +194,48 @@ $( document ).ready(function(){
 			context.textBaseline = "middle";
 			context.fillText("Congratulations!", canvas.width / 2, canvas.height / 2);
 			window.removeEventListener("keydown", moveRect, true);
-	    }
-	}
-	function canMoveTo(destX, destY) {
-		
-	    var imgData = context.getImageData(destX, destY, 12, 12);
-	    var data = imgData.data;
-	    var canMove = 1; // 1 means: the rectangle can move
-	    if (destX >= 0 && destX <= mazeWidth - 12 && destY >= 0 && destY <= mazeHeight - 12) {
-		for (var i = 0; i < 4 * 12 * 12; i += 4) {
-		    if (data[i] === 0 && data[i + 1] === 0 && data[i + 2] === 0) { // black
-			canMove = 0; // 0 means: the rectangle can't move
-			break;
-		    }
-		    else if (data[i] === 0 && data[i + 1] === 255 && data[i + 2] === 0) { // #00FF00
-			canMove = 2; // 2 means: the end point is reached
-			break;
-		    }
 		}
-	    }
-	    else {
-		canMove = 0;
-	    }
-	    return canMove;
-	}
+	};
 		
-	function createTimer(seconds) {
-		intervalVar = setInterval(function () {
-			makeWhite(mazeWidth, 0, canvas.width - mazeWidth, canvas.height);
-			if (seconds === 0) {
-				time = false
-				gameOver.volume = .35
-				gameOver.play();
-				clearInterval(intervalVar);
-				window.removeEventListener("keydown", moveRect, true);
-				makeWhite(0, 0, canvas.width, canvas.height);
-				context.font = "40px Arial";
-				context.fillStyle = "red";
-				context.textAlign = "center";
-				context.textBaseline = "middle";
-				context.fillText("Carbon Time's Up!", canvas.width / 4, canvas.height / 4);
-				document.getElementById("next-url").style.visibility = "visible";
-				return;
-			}
-			context.font = "20px Arial";
-			if (seconds <= 10 && seconds > 5) {
-				context.fillStyle = "orangered";
-				bgs.volume = .6
-			}
-			else if (seconds <= 5) {
-				context.fillStyle = "red";
-				bgs.volume = .4
-			}
-			else {
-				context.fillStyle = "green";
-			}
-			context.textAlign = "center";
-			context.textBaseline = "middle";
-			var secondsToShow = seconds.toString();
-			context.fillText(secondsToShow, mazeWidth + 20, canvas.height / 7);
-			seconds--;
-		}, 1000);
-	}
+	var render = function () {
+		if (mazeReady) {
+			context.drawImage(mazeImage, 0, 0);
+		}
+	
+		if (characterReady) {
+			context.drawImage(characterImage, character.x, character.y);
+		}
+		
+		if (endReady) {
+			context.drawImage(endImage, end.x, end.y);
+		}
+		
+		if (questionReady) {
+			context.drawImage(questionImage, question1.x, question1.y)
+			context.drawImage(questionImage, question2.x, question2.y)
+			context.drawImage(questionImage, question3.x, question3.y)
+		}
+	};
 
-	function makeWhite(x, y, w, h) {
-		context.beginPath();
-		context.rect(x, y, w, h);
-		context.closePath();
-		context.fillStyle = "white";
-		context.fill();
-	}
-
-	//Main game loop
-	function main(){
+	var main = function () {
 		var now = Date.now();
-		//Used for animation
-		if((now - frameCount) >= 110){
-			frameCount = now;
-			if(index == 6){
-				index = 0;
-			}
-			else{
-				index += 1;
-			} 
-		}
-		//if there is still time we continue to render the atom
-		if(time){
-			render(loaded, index);
-			}
+		var delta = now - then;
+		
+		update(delta / 1000);
+		render();
+		
 		then = now;
+		
+		//Request again ASAP
 		requestAnimationFrame(main);
-	}
-
+	};
+	
+	//Cross browser crap
 	var w = window;
 	requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
-
-
-	//draw the maze
-	drawMazeAndRectangle(67, 3);
-
 	
+	//Play
 	var then = Date.now();
-	frameCount = then
-	//set position of atom
 	reset();
-	//start the main game loop
 	main();
-	window.addEventListener("keydown", moveRect, true);
-	createTimer(20);
-	
 });
