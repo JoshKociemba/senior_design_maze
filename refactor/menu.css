@@ -5,6 +5,13 @@
 	background-color: #E6E6E9;
 }
 
+.menu{
+	visibility: hidden;
+	position: absolute;
+	height: 30em;
+	width: 40em;
+}
+
 h1{
 	font-family: 'Century Gothic', Arial, sans-serif;
 	font-size: 2.5em;
