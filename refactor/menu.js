@@ -1,18 +1,73 @@
 $( document ).ready(function() {
-	
-    function displayNextMenu() {
+	function showMenu(id) {
 		$(".menu").css("visibility","hidden");
-		x = (x === menu.length - 1) ? 0 : x + 1;
-		$(menu[x]).css("visibility","visible");
+		$(id).css("visibility","visible");
 	}
 	
-	function startTimer() {
-		setInterval(displayNextMenu, 3000);
+	//MAZE FUNCTIONS//
+	//NOTE: loadMaze is from maze.js
+	function naturalGasMaze() {
+		loadMaze(maze, bg-img, start, end);
+		fuelPlaceMenu();
 	}
 	
-	var menu = ["#main-menu", "#fuel-place-menu", "#place-atmo-menu", "#atmo-biomass-menu", "#end-menu"];
-	var x = 0;
+	function houseMaze() {
+		loadMaze(maze, bg-img, start, end);
+		placeAtmoMenu();
+	}
 	
-	$(menu[x]).css("visibility","visible");
-	startTimer();
+	function carbonDioxideMaze() {
+		loadMaze(maze, bg-img, start, end);
+		atmoBiomassMenu();
+	}
+	
+	function sheepMaze() {
+		loadMaze(maze, bg-img, start, end);
+		endMenu();
+	}
+	
+	//MENU FUNCTIONS//
+	function fuelPlaceMenu() {
+		showMenu("#fuel-place-menu");
+		document.getElementById('house').onclick = function() {
+		   houseMaze();
+		}​;​
+	}
+	
+	function placeAtmoMenu() {
+		showMenu("#place-atmo-menu");
+		document.getElementById('co2').onclick = function() {
+		   carbonDioxideMaze();
+		}​;​
+	}
+	
+	function atmoBiomassMenu() {
+		showMenu("#atmo-biomass-menu");
+		document.getElementById('sheep').onclick = function() {
+		   sheepMaze();
+		}​;​
+	}
+	
+	function endMenu() {
+		showMenu("#end-menu");
+		document.getElementById('credits-end').onclick = function() {
+		   showMenu("#credits");
+		}​;​
+		document.getElementById('play-again').onclick = function() {
+		   startGame();
+		}​;​
+	}
+
+	//START GAME & FOSSIL FUEL MENU//
+	function startGame() {
+		document.getElementById('credits-start').onclick = function() {
+		   showMenu("#credits");
+		}​;​
+		document.getElementById('natural-gas').onclick = function() {
+		   naturalGasMaze();
+		}​;​
+	}
+	
+	//MAIN//
+	startGame();
 });

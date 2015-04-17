@@ -55,13 +55,18 @@ a .button{
 	color: #000000;
 }
 
-.button#credits {
+/* 
+ * NOTE: there are two credits buttons. One for the start menu and one for the end
+ * menu. They should be formatted the same and lead to the same credit page, however
+ * they have separate IDs so the JS knows which one it is listening for.
+ */
+.button.credits {
 	-webkit-border-radius: 10;
 	-moz-border-radius: 10;
 	border-radius: 10px;
 	font-size: 14px;
 	border: none;
-	padding: 7px 14px 7px 14px;
+	padding: 7px 14px 8px 14px;
 	margin: 1em;
 	width: 3.5em;
 	position: absolute;
@@ -69,4 +74,8 @@ a .button{
 	bottom: 0;
 	background: #4C8F4D;
 	color: #fff
+}
+
+.credits:hover{
+	background: #60c160;
 }
