@@ -1,4 +1,5 @@
 $( document ).ready(function() {
+	
     function displayNextMenu() {
 		$(".menu").css("visibility","hidden");
 		x = (x === menu.length - 1) ? 0 : x + 1;
