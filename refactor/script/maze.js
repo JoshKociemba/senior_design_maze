@@ -194,27 +194,13 @@ function loadMaze(mazeImg, bgImg, start, end) {
 			&& end.x <= (character.x + 8)
 			&& character.y <= (end.y + 8)
 			&& end.y <= (character.y + 8)
-			&& !(($("#main-menu").css("visibility") == "visible")
-			|| ($("#fuel-place-menu").css("visibility") == "visible")
-			|| ($("#place-atmo-menu").css("visibility") == "visible")
-			|| ($("#atmo-biomass-menu").css("visibility") == "visible")
-			|| ($("#end-menu").css("visibility") == "visible")
-			|| ($("#continue-menu").css("visibility") == "visible")
-			|| ($("#try-again-menu").css("visibility") == "visible"))
 		) {
+			reset();
 			makeWhite(0, 0, canvas.width, canvas.height);
 			$(".menu").css("visibility","hidden");
 			$("#game").css("visibility","hidden");
 			$("#continue-menu").css("visibility","visible");
 			reset();
-			// context.font = "40px Arial";
-			// context.fillStyle = "blue";
-			// context.textAlign = "center";
-			// context.textBaseline = "middle";
-			// context.fillText("Congratulations!", canvas.width / 2, canvas.height / 2);
-			// window.removeEventListener("keydown", moveRect, true);
-			//need continue button
-			//listener when button pressed then makeWhite and hide canvas
 		}
 	};
 		

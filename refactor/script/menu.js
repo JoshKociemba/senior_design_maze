@@ -2,7 +2,7 @@ $( document ).ready(function() {
 	var menus = ["#main-menu",
 					"#fuel-place-menu",
 					"#place-atmo-menu",
-					"#atmo-biomass-menu",
+					// "#atmo-biomass-menu",
 					"#end-menu"
 				];
 	var x = 0;
