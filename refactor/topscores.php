@@ -10,12 +10,13 @@
     $result_length = mysql_num_rows($result); 
     
 	//Table headers
-	echo "Username \t Highscore <br>";
+	echo "<p class='p2'> Username \t Highscore </p><br>";
 	
     //And now iterate through our results
     for($i = 0; $i < $result_length; $i++)
     {
          $row = mysql_fetch_array($result);
-         echo $row['username'] . "\t" . $row['score'] . "<br>"; // And output them
+         echo "<p class='p1'>" . $row['username'] . "\t" . $row['score'] . "</p>"; // And output them
     }
+    echo "<br>";
 ?>

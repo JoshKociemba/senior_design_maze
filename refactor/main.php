@@ -68,11 +68,15 @@
 		</div>
 		<div class="menu" id="credits-menu">
 			<h1>Credits</h1>
-			<p>Katie Hughes</p><p>Joshua Kociemba</p><p>Tony Twyman</p>
+			<p class="p1">Katie Hughes</p><p class="p1">Joshua Kociemba</p><p class="p1">Tony Twyman</p>
+			<p class="p2">Special Thanks To</p>
+			<p class="p1">Energize Corvallis</p><p class="p1">Oregon State University</p><br>
 			<div class="button" id="credits-back">Main Menu</div>
 		</div>
 		<div class="menu" id="leader-menu">
-			<?php include 'topscores.php';?>
+			<?php session_start(); 
+				require "config.php"; //Connection Script, include in every file!
+			 	include 'topscores.php';?>
 			<div class="button" id="leader-back">Main Menu</div>
 		</div>
 		

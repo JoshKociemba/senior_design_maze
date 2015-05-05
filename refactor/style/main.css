@@ -27,6 +27,23 @@ p{
 	text-align: center;
 }
 
+.p1{
+	font-family: Times, serif;
+	font-style: normal;
+	padding: 0 1em 0 1em;
+	font-size: 1.1em;
+	text-align: center;
+}
+
+.p2{
+	font-family: Times, serif;
+	font-style: normal;
+	font-weight: bold;
+	padding: 0 1em 0 1em;
+	font-size: 1.3em;
+	text-align: center;
+}
+
 .button{
 	-webkit-border-radius: 10;
 	-moz-border-radius: 10;

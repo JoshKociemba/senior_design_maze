@@ -51,7 +51,7 @@ $( document ).ready(function() {
 	function endMenu() {
 		showMenu("#end-menu");
 		document.getElementById('credits-end').onclick = function() {
-		   showMenu("#credits");
+		   showMenu("#credits-menu");
 		}​;​
 		document.getElementById('play-again').onclick = function() {
 		   startGame();
@@ -61,7 +61,7 @@ $( document ).ready(function() {
 	//START GAME & FOSSIL FUEL MENU//
 	function startGame() {
 		document.getElementById('credits-start').onclick = function() {
-		   showMenu("#credits");
+		   showMenu("#credits-menu");
 		}​;​
 		document.getElementById('natural-gas').onclick = function() {
 		   naturalGasMaze();
