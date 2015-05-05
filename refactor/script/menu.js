@@ -91,8 +91,13 @@ $( document ).ready(function() {
 	document.getElementById('credits-back').onclick = function() {
 	   showMenu("#main-menu");
 	};
+	
 	document.getElementById('leader-start').onclick = function() {
 	   showMenu("#leader-menu");
+	};
+
+	document.getElementById('leader-back').onclick = function() {
+	   showMenu("#main-menu");
 	};
 	
 	document.getElementById('continue').onclick = function() {
