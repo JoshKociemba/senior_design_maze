@@ -61,7 +61,7 @@ $( document ).ready(function() {
 	
 	//SET MENU BUTTON LISTENERS//
 	document.getElementById('credits-start').onclick = function() {
-	   showMenu("#credits");
+	   showMenu("#credits-menu");
 	};
 	
 	document.getElementById('natural-gas').onclick = function() {
@@ -81,11 +81,18 @@ $( document ).ready(function() {
 	};
 	
 	document.getElementById('credits-end').onclick = function() {
-	   showMenu("#credits");
+	   showMenu("#credits-menu");
 	};
 	
 	document.getElementById('play-again').onclick = function() {
 	   startGame();
+	};
+	
+	document.getElementById('credits-back').onclick = function() {
+	   showMenu("#main-menu");
+	};
+	document.getElementById('leader-start').onclick = function() {
+	   showMenu("#leader-menu");
 	};
 	
 	document.getElementById('continue').onclick = function() {

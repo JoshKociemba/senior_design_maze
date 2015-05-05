@@ -80,6 +80,26 @@ a .button{
 	background: #60c160;
 }
 
+.button.leader {
+	-webkit-border-radius: 10;
+	-moz-border-radius: 10;
+	border-radius: 10px;
+	font-size: 14px;
+	border: none;
+	padding: 7px 14px 8px 14px;
+	margin: 1em;
+	width: 6.2em;
+	position: absolute;
+	right: 35.5em;
+	bottom: 0;
+	background: #4C8F4D;
+	color: #fff
+}
+
+.leader:hover{
+	background: #60c160;
+}
+
 
 /***** GAME RELATED *****/
 .game {
