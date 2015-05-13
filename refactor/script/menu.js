@@ -60,13 +60,13 @@ $( document ).ready(function() {
 	
 	
 	//SET MENU BUTTON LISTENERS//
-	document.getElementById('credits-start').onclick = function() {
+/* 	document.getElementById('credits-start').onclick = function() {
 	   showMenu("#credits-menu");
-	};
+	}; */
 	
-	document.getElementById('natural-gas').onclick = function() {
+/* 	document.getElementById('natural-gas').onclick = function() {
 	   naturalGasMaze();
-	};
+	}; */
 	
 	document.getElementById('house').onclick = function() {
 	   houseMaze();
@@ -88,7 +88,7 @@ $( document ).ready(function() {
 	   startGame();
 	};
 	
-	document.getElementById('credits-back').onclick = function() {
+	/* document.getElementById('credits-back').onclick = function() {
 	   showMenu("#main-menu");
 	};
 	
@@ -98,7 +98,7 @@ $( document ).ready(function() {
 
 	document.getElementById('leader-back').onclick = function() {
 	   showMenu("#main-menu");
-	};
+	}; */
 	
 	document.getElementById('continue').onclick = function() {
 		x = (x === menus.length - 1) ? 0 : x + 1;
