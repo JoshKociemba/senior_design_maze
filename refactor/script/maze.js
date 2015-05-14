@@ -12,8 +12,10 @@ function loadMaze(mazeImg, bgImg, start, end) {
 	console.log("Start: (" + start.x + ", " + start.y + ")");
 	console.log("End: (" + end.x + ", " + end.y + ")");
 	
-	
+	$(".screen").css("visibility","hidden");
 	$(".menu").css("visibility","hidden");
+	$(".button").css("visibility","hidden");
+	$(".arrow").css("visibility","hidden");
 	$("#game").css("visibility","visible");
 	
 	//Game Background
@@ -199,7 +201,8 @@ function loadMaze(mazeImg, bgImg, start, end) {
 			makeWhite(0, 0, canvas.width, canvas.height);
 			$(".menu").css("visibility","hidden");
 			$("#game").css("visibility","hidden");
-			$("#continue-menu").css("visibility","visible");
+			$("#dummy-outro-q").css("visibility","visible");
+			$("#outro").css("visibility","visible");
 			reset();
 		}
 	};

@@ -11,60 +11,28 @@
 <body>
     <div id="game-wrapper">
 		<!--MENUS-->
-		<div class="menu" id="main-menu">
-			<!-- <h1>A-MAZE-ing Energy!</h1>
-			<p>Welcome to A-MAZE-ing Energy! You will navigate though a series of mazes to
-				get a better idea of the carbon cycle! Finish the maze before the time
-				runs out. To get more time, answer more questions and do so correctly!
-				To begin, click on the fossil fuel below:
-			</p>
-			<div class="button" id="natural-gas">Natural Gas</div><br> -->
-			
-			<!-- <div class="leader button" id="leader-start">Leaderboard</div> -->
-			<div class="quadrant" id="q1">
-				<img src="images/atmosphere.png" />
-			</div>
-			<div class="quadrant" id="q2">
-				<img src="images/biomass.png" />
-			</div>
-			<div class="quadrant" id="q3">
-				<img src="images/fossil_fuel.png" />
-				<div class="button" id="fossil-fuel">Start Here</div>
-			</div>
-			<div class="quadrant" id="q4">
-				<img src="images/soil.png" />
+		<div class="screen" id="main-screen">
+			<div class="system">
+				<img src="images/full.png" />
+				<img src="images/arrows/atmo-bio.png" class="arrow" id="atmo-bio" />
+				<img src="images/arrows/bio-atmo.png" class="arrow" id="bio-atmo" />
+				<img src="images/arrows/bio-soil.png" class="arrow" id="bio-soil" />
+				<img src="images/arrows/ff-atmo.png" class="arrow" id="ff-atmo" />
+				<img src="images/arrows/soil-atmo.png" class="arrow" id="soil-atmo" />
 			</div>
 			
-			<div class="arrows">
-				<img src="images/arrows/atmo-bio.png" />
-				<img src="images/arrows/bio-atmo.png" />
-				<img src="images/arrows/bio-ff.png" />
-				<img src="images/arrows/ff-atmo.png" />
-				<img src="images/arrows/soil-atmo.png" />
-			</div>
-			
-			<div class="credits button" id="credits-start">Instructions</div>
+			<div class="credits button" id="instructions">Instructions</div>
+			<div class="pink button" id="fossil-fuel">Start Here</div>
+			<div class="pink button" id="atmosphere">Continue</div>
+			<div class="pink button" id="biomass">Continue</div>
+			<div class="pink button" id="soil">Continue</div>
+			<div class="pink button" id="finish">Finish</div>
 		</div>
-		<div class="menu" id="fuel-place-menu">
-			<h1>Using the Fossil Fuels</h1>
-			<p>There are many different ways to use fossil fuels. From making a car go to
-				powering a whole city with a power plant. In this case we are going to
-				explore how natural gas is used in heating your own home!
-			</p>
-			<div class="button" id="house">House</div><br>
+		<div class="screen" id="dummy-intro-q">
+			<div class="pink button" id="intro">Continue</div>
 		</div>
-		<div class="menu" id="place-atmo-menu">
-			<h1>Carbon in the Atmosphere</h1>
-			<p>When using the fossil fuels, carbon can be released in many ways into the
-				atmosphere. The way that most people think of is through carbon dioxide.
-			</p>
-			<div class="button" id="co2">Carbon Dioxide</div><br>
-		</div>
-		<div class="menu" id="atmo-biomass-menu">
-			<h1>Moving to Biomass</h1>
-			<p>From the atmosphere, carbon then enters into the biomass sector. Let's look
-				at the example of a mammal, a sheep in particular!</p>
-			<div class="button" id="sheep">Sheep</div><br>
+		<div class="screen" id="dummy-outro-q">
+			<div class="pink button" id="outro">Continue</div>
 		</div>
 		<div class="menu" id="end-menu">
 			<h1>There's another carbon molecule in the atmosphere!</h1>

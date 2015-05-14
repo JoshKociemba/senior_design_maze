@@ -1,10 +1,25 @@
 $( document ).ready(function() {
-	var menus = ["#main-menu",
-					"#fuel-place-menu",
-					"#place-atmo-menu",
-					// "#atmo-biomass-menu",
-					"#end-menu"
+	var buttons = ["#fossil-fuel",
+					"#atmosphere",
+					"#biomass",
+					"#soil",
+					"#finish"
 				];
+	var arrows = ["#ff-atmo",
+					"#atmo-bio",
+					"#bio-soil",
+					"#soil-atmo",
+					"#bio-atmo"
+				];
+	
+	var arrow_bool = [0,0,0,0,0];
+	var next_bool = [0,0,0,0,0];
+	var FF_ATMO = 0;
+	var ATMO_BIO = 1;
+	var BIO_SOIL = 2;
+	var SOIL_ATMO = 3;
+	var BIO_ATMO = 4;
+	
 	var x = 0;
 
 	//these variables should be defined for each Maze function, but are currently
@@ -24,11 +39,11 @@ $( document ).ready(function() {
 		y: 12*unit+6
 	};
 	
-	function showMenu(id) {
-		$(".menu").css("visibility","hidden");
+	function showButton(id) {
+		$(".pink .button").css("visibility","hidden");
 		$("#game").css("visibility","hidden");
 		$(id).css("visibility","visible");
-		console.log("Show menu shows: "+id);
+		console.log("Show button shows: "+id);
 	}
 	
 	// function hideAllMenus() {
@@ -38,100 +53,185 @@ $( document ).ready(function() {
 	
 	//MAZE FUNCTIONS//
 	//NOTE: loadMaze is from maze.js
-	function naturalGasMaze() {
+	function fossilFuelMaze() {
 		loadMaze(mazeImg, bgImg, start, end);
 		//fuelPlaceMenu();
 	}
 	
-	function houseMaze() {
+	function soilMaze() {
 		loadMaze(mazeImg, bgImg, start, end);
 		//placeAtmoMenu();
 	}
 	
-	function carbonDioxideMaze() {
+	function atmosphereMaze() {
 		loadMaze(mazeImg, bgImg, start, end);
 		//atmoBiomassMenu();
 	}
 	
-	function sheepMaze() {
+	function biomassMaze() {
 		loadMaze(mazeImg, bgImg, start, end);
 		//endMenu();
 	}
 	
 	
 	//SET MENU BUTTON LISTENERS//
-/* 	document.getElementById('credits-start').onclick = function() {
-	   showMenu("#credits-menu");
+ 	/* document.getElementById('credits-start').onclick = function() {
+	   showButton("#credits-menu");
 	}; */
 	
-/* 	document.getElementById('natural-gas').onclick = function() {
-	   naturalGasMaze();
+/* 	document.getElementById('instructions').onclick = function() {
+	   showButton("#credits-menu");
 	}; */
 	
-	document.getElementById('house').onclick = function() {
-	   houseMaze();
+	document.getElementById('fossil-fuel').onclick = function() {
+		$(".button").css("visibility","hidden");
+		$(".screen").css("visibility","hidden");
+		$(".arrow").css("visibility","hidden");
+		$("#dummy-intro-q").css("visibility","visible");
+		$("#intro").css("visibility","visible");
+		next_bool[FF_ATMO] = 1;
+		arrow_bool[FF_ATMO] = 1;
 	};
 	
-	document.getElementById('co2').onclick = function() {
-	   carbonDioxideMaze();
+	document.getElementById('atmosphere').onclick = function() {
+		$(".button").css("visibility","hidden");
+		$(".screen").css("visibility","hidden");
+		$(".arrow").css("visibility","hidden");
+		$("#dummy-intro-q").css("visibility","visible");
+		$("#intro").css("visibility","visible");
+		next_bool[ATMO_BIO] = 1;
+		arrow_bool[ATMO_BIO] = 1;
 	};
 
-	document.getElementById('sheep').onclick = function() {
-	   sheepMaze();
+	document.getElementById('biomass').onclick = function() {
+		$(".button").css("visibility","hidden");
+		$(".screen").css("visibility","hidden");
+		$(".arrow").css("visibility","hidden");
+		$("#dummy-intro-q").css("visibility","visible");
+		$("#intro").css("visibility","visible");
+		next_bool[BIO_SOIL] = 1;
+		arrow_bool[BIO_SOIL] = 1;
 	};
 	
-	document.getElementById('credits-end').onclick = function() {
-	   showMenu("#credits-menu");
+	document.getElementById('soil').onclick = function() {
+		$(".button").css("visibility","hidden");
+		$(".screen").css("visibility","hidden");
+		$(".arrow").css("visibility","hidden");
+		$("#dummy-intro-q").css("visibility","visible");
+		$("#intro").css("visibility","visible");
+		next_bool[SOIL_ATMO] = 1;
+		arrow_bool[SOIL_ATMO] = 1;
 	};
+	
+/* 	document.getElementById('credits-end').onclick = function() {
+	   showButton("#credits-menu");
+	}; */
 	
 	document.getElementById('play-again').onclick = function() {
 	   startGame();
 	};
 	
 	/* document.getElementById('credits-back').onclick = function() {
-	   showMenu("#main-menu");
+	   showButton("#main-menu");
 	};
 	
 	document.getElementById('leader-start').onclick = function() {
-	   showMenu("#leader-menu");
+	   showButton("#leader-menu");
 	};
 
 	document.getElementById('leader-back').onclick = function() {
-	   showMenu("#main-menu");
+	   showButton("#main-menu");
 	}; */
 	
 	document.getElementById('continue').onclick = function() {
-		x = (x === menus.length - 1) ? 0 : x + 1;
+		x = (x === buttons.length - 1) ? 0 : x + 1;
 		console.log(x);
-		console.log(menus[x]);
-        showMenu(menus[x]);
+		console.log(buttons[x]);
+        showButton(buttons[x]);
+	};
+	
+	document.getElementById('intro').onclick = function() {
+		var pos = 0;
+		var bool = 0;
+		$(".button").css("visibility","hidden");
+		$(".screen").css("visibility","hidden");
+		while (!bool && pos < next_bool.length){
+			bool = next_bool[pos];
+			pos++;
+		}
+		if (pos < next_bool.length) {
+			switch (pos) {
+				case FF_ATMO:
+					fossilFuelMaze();
+					break;
+				case ATMO_BIO:
+					atmosphereMaze();
+					break;
+				case BIO_SOIL:
+					biomassMaze();
+					break;
+				case SOIL_ATMO:
+					soilMaze();
+					break;
+				case BIO_ATMO:
+					biomassMaze();
+					break;
+			}
+		}
+	};
+	
+	document.getElementById('outro').onclick = function() {
+		var pos = 0;
+		var bool = 0;
+		$(".screen").css("visibility","hidden");
+		$(".button").css("visibility","hidden");
+		console.log(arrow_bool);
+		while (pos < arrow_bool.length){
+			if (arrow_bool[pos])
+				$(arrows[pos]).css("visibility","visible");
+			pos++;
+		}
+		$("#main-screen").css("visibility","visible");
+		pos = 0;
+		while (!bool && pos < next_bool.length){
+			bool = next_bool[pos];
+			pos++;
+		}
+		pos--;
+		if (pos < next_bool.length) {
+			switch (pos) {
+				case FF_ATMO:
+					showButton("#atmosphere");
+					next_bool[FF_ATMO] = 0;
+					break;
+				case ATMO_BIO:
+					showButton("#biomass");
+					next_bool[ATMO_BIO] = 0;
+					break;
+				case BIO_SOIL:
+					showButton("#soil");
+					next_bool[BIO_SOIL] = 0;
+					break;
+				case SOIL_ATMO:
+					showButton("#atmosphere");
+					next_bool[SOIL_ATMO] = 0;
+					break;
+				case BIO_ATMO:
+					showButton("#atmosphere");
+					next_bool[BIO_ATMO] = 0;
+					break;
+			}
+		}
 	};
 	
 	document.getElementById('try-again').onclick = function() {
-		showMenu(menus[x]);
+		showButton(buttons[x]);
 	};
 	
-	
-	//MENU FUNCTIONS - NECESSARY????//
-	// function fuelPlaceMenu() {
-		// showMenu("#fuel-place-menu");
-	// }
-	
-	// function placeAtmoMenu() {
-		// showMenu("#place-atmo-menu");
-	// }
-	
-	// function atmoBiomassMenu() {
-		// showMenu("#atmo-biomass-menu");
-	// }
-	
-	// function endMenu() {
-		// showMenu("#end-menu");
-	// }
 
 	//START GAME & FOSSIL FUEL MENU//
 	function startGame() {
-		showMenu("#main-menu");
+		showButton("#fossil-fuel");
 	}
 	
 	//MAIN//
