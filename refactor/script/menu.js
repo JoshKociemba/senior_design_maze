@@ -20,6 +20,8 @@ $( document ).ready(function() {
 	var SOIL_ATMO = 3;
 	var BIO_ATMO = 4;
 	
+	var atmoVsoil = 0;
+	
 	var x = 0;
 
 	//these variables should be defined for each Maze function, but are currently
@@ -69,21 +71,14 @@ $( document ).ready(function() {
 	}
 	
 	function biomassMaze() {
+		console.log("Calling biomass maze");
 		loadMaze(mazeImg, bgImg, start, end);
 		//endMenu();
 	}
 	
 	
 	//SET MENU BUTTON LISTENERS//
- 	/* document.getElementById('credits-start').onclick = function() {
-	   showButton("#credits-menu");
-	}; */
-	
-/* 	document.getElementById('instructions').onclick = function() {
-	   showButton("#credits-menu");
-	}; */
-	
-	document.getElementById('fossil-fuel').onclick = function() {
+ 	document.getElementById('fossil-fuel').onclick = function() {
 		$(".button").css("visibility","hidden");
 		$(".screen").css("visibility","hidden");
 		$(".arrow").css("visibility","hidden");
@@ -107,10 +102,21 @@ $( document ).ready(function() {
 		$(".button").css("visibility","hidden");
 		$(".screen").css("visibility","hidden");
 		$(".arrow").css("visibility","hidden");
+		
+		if (atmoVsoil % 2 == 0) {
+			next_bool[BIO_SOIL] = 1;
+			arrow_bool[BIO_SOIL] = 1;
+			console.log("bio->soil next");
+		}
+		else {
+			next_bool[BIO_ATMO] = 1;
+			arrow_bool[BIO_ATMO] = 1;
+			console.log("bio->atmo next");
+		}
+		
 		$("#dummy-intro-q").css("visibility","visible");
 		$("#intro").css("visibility","visible");
-		next_bool[BIO_SOIL] = 1;
-		arrow_bool[BIO_SOIL] = 1;
+		atmoVsoil++;
 	};
 	
 	document.getElementById('soil').onclick = function() {
@@ -155,10 +161,12 @@ $( document ).ready(function() {
 		var bool = 0;
 		$(".button").css("visibility","hidden");
 		$(".screen").css("visibility","hidden");
+		console.log("intro button clicked");
 		while (!bool && pos < next_bool.length){
 			bool = next_bool[pos];
 			pos++;
 		}
+		pos--;
 		if (pos < next_bool.length) {
 			switch (pos) {
 				case FF_ATMO:
@@ -174,6 +182,7 @@ $( document ).ready(function() {
 					soilMaze();
 					break;
 				case BIO_ATMO:
+					console.log("intro: bio->atmo");
 					biomassMaze();
 					break;
 			}
@@ -207,20 +216,29 @@ $( document ).ready(function() {
 				case ATMO_BIO:
 					showButton("#biomass");
 					next_bool[ATMO_BIO] = 0;
-					break;
+					break; 
 				case BIO_SOIL:
 					showButton("#soil");
+					console.log("in bio->soil");
 					next_bool[BIO_SOIL] = 0;
-					break;
+					break; 
 				case SOIL_ATMO:
 					showButton("#atmosphere");
 					next_bool[SOIL_ATMO] = 0;
 					break;
-				case BIO_ATMO:
+				 case BIO_ATMO:
 					showButton("#atmosphere");
+					console.log("in bio->atmo");
 					next_bool[BIO_ATMO] = 0;
 					break;
 			}
+			//from bio, this is where it is determined what is next
+			/* console.log(pos);
+			if (pos == BIO_ATMO || pos == BIO_SOIL) {
+				if (atmoVsoil % 2 == 1) 
+					showButton("#soil");
+				else showButton("#atmosphere");
+			} */
 		}
 	};
 	
