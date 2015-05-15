@@ -1,13 +1,22 @@
 //start contains the x, y for where the character should start
 //and end contains the x, y for the end game point
-function loadMaze(mazeImg, bgImg, start, end) {	
+function loadMaze(mazeImg, start, end) {	
 	//Creating game canvas
 	var canvas = document.getElementById("maze-canvas");
 	var context = canvas.getContext("2d");
-	var mazeWidth = 242;
-	var mazeHeight = 242;
-	canvas.width = mazeWidth*2;
-	canvas.height = mazeHeight*2;
+	var mazeWidth = 790;
+	var mazeHeight = 530;
+	var score = 0;
+	canvas.width = 790;
+	canvas.height = 530;
+	
+	var characterImage_obj = {
+		'source': null,
+		'current': 1,
+		'total_frames': 7,
+		'width': 24,
+		'height': 24
+	};
 	
 	console.log("Start: (" + start.x + ", " + start.y + ")");
 	console.log("End: (" + end.x + ", " + end.y + ")");
@@ -31,8 +40,10 @@ function loadMaze(mazeImg, bgImg, start, end) {
 	var characterReady = false;
 	var characterImage = new Image();
 	characterImage.onload = function () {
+		characterImage_obj.source = characterImage;
 		characterReady = true;
 	};
+	//characterImage.src = "images/sprite_sheet.png";
 	characterImage.src = "images/sprite.png";
 	
 	//Question Tile
@@ -41,7 +52,7 @@ function loadMaze(mazeImg, bgImg, start, end) {
 	questionImage.onload = function () {
 		questionReady = true;
 	};
-	questionImage.src = "question.png";
+	questionImage.src = "images/question.png";
 	
 	//Exit Tile
 	var endReady = false;
@@ -49,11 +60,11 @@ function loadMaze(mazeImg, bgImg, start, end) {
 	endImage.onload = function () {
 		endReady = true;
 	};
-	endImage.src = "end.png";
+	endImage.src = "images/end.png";
 	
 	//Game Objects
 	var character = {
-		speed: 100
+		speed: 500
 	};
 	var question1 = {};
 	var question2 = {};
@@ -76,8 +87,6 @@ function loadMaze(mazeImg, bgImg, start, end) {
 	var reset = function () {
 		character.x = start.x;
 		character.y = start.y;
-		//end.x = (mazeWidth / 2) - 6;
-		//end.y = mazeHeight - 14;
 		newquestion();
 	};
 	
@@ -94,40 +103,32 @@ function loadMaze(mazeImg, bgImg, start, end) {
 		question3.y = 32 + (Math.random() * (mazeHeight - 64));
 		
 		//Timer placement and Questions Hit
-		makeWhite(0, 245, mazeWidth, 15);
-		context.fillStyle = "rgb(0, 0, 0)";
-		context.font = "12px Helvetica";
-		context.textAlign = "left";
-		context.textBaseline = "top";
-		context.fillText("Questions Hit: " + questionsHit, 0, 245);
+		makeWhite(600, 245, 50, 50);
+		context.font = "20px Arial";
+		context.fillStyle = "black";
+		context.textAlign = "center";
+		context.textBaseline = "middle";
+		context.fillText("Carbon: ", 200, 600);
 	};
 	
+	
 	var collisiondetect = function(destX, destY) {
-		var imgData = context.getImageData(destX, destY, 12, 13);
+		var spritewidth = 22;
+		var spriteheight = 24;
+		var imgData = context.getImageData(destX, destY, spritewidth, spriteheight);
 		var data = imgData.data;
 		var canmove = 1;
-		if (destX >= 0 && destX <= mazeWidth - 12 && destY >= 0 && destY <= mazeHeight - 13) { // check whether the rectangle would move inside the bounds of the canvas
-			for (var i = 0; i < 4 * 12 * 13; i += 4) { // look at all pixels
+		if (destX >= 0 && destX <= mazeWidth - spritewidth && destY >= 0 && destY <= mazeHeight - spriteheight) { // check whether the rectangle would move inside the bounds of the canvas
+			for (var i = 0; i < 4 * spritewidth * spriteheight; i += 4) { // look at all pixels
 				if (data[i] === 0 && data[i + 1] === 0 && data[i + 2] === 0) { // black
 					canmove = 0; // 0 means: the rectangle can't move
 					break;
 				}	
-				else if (data[i] === 0 && data[i + 1] === 255 && data[i + 2] === 0) { // lime: #00FF00
-					canmove = 2; // 2 means: the end point is reached
-					break;
-				}
 			}
 		}
 		else {
 			canmove = 0;
 		}
-		
-		makeWhite(0, 265, canvas.width, 15);
-		context.fillStyle = "rgb(0, 0, 0)";
-		context.font = "12px Helvetica";
-		context.textAlign = "left";
-		context.textBaseline = "top";
-		context.fillText("X: " + Math.round(character.x) + "   Y:   " + Math.round(character.y) + "   Can move: " + canmove, 0, 265);
 		
 		return canmove;
 	};
@@ -165,37 +166,37 @@ function loadMaze(mazeImg, bgImg, start, end) {
 		
 		//Collision Detection
 		if (
-			character.x <= (question1.x + 8)
-			&& question1.x <= (character.x + 8)
-			&& character.y <= (question1.y + 8)
-			&& question1.y <= (character.y + 8)
+			character.x <= (question1.x + 15)
+			&& question1.x <= (character.x + 15)
+			&& character.y <= (question1.y + 15)
+			&& question1.y <= (character.y + 15)
 		) {
 			++questionsHit;
 			newquestion();
 		}
 		if (
-			character.x <= (question2.x + 8)
-			&& question2.x <= (character.x + 8)
-			&& character.y <= (question2.y + 8)
-			&& question2.y <= (character.y + 8)
+			character.x <= (question2.x + 15)
+			&& question2.x <= (character.x + 15)
+			&& character.y <= (question2.y + 15)
+			&& question2.y <= (character.y + 15)
 		) {
 			++questionsHit;
 			newquestion();
 		}
 		if (
-			character.x <= (question3.x + 8)
-			&& question3.x <= (character.x + 8)
-			&& character.y <= (question3.y + 8)
-			&& question3.y <= (character.y + 8)
+			character.x <= (question3.x + 15)
+			&& question3.x <= (character.x + 15)
+			&& character.y <= (question3.y + 15)
+			&& question3.y <= (character.y + 15)
 		) {
 			++questionsHit;
 			newquestion();
 		}
 		if (
-			character.x <= (end.x + 8)
-			&& end.x <= (character.x + 8)
-			&& character.y <= (end.y + 8)
-			&& end.y <= (character.y + 8)
+			character.x <= (end.x + 15)
+			&& end.x <= (character.x + 15)
+			&& character.y <= (end.y + 15)
+			&& end.y <= (character.y + 15)
 		) {
 			reset();
 			makeWhite(0, 0, canvas.width, canvas.height);
@@ -204,8 +205,55 @@ function loadMaze(mazeImg, bgImg, start, end) {
 			$("#dummy-outro-q").css("visibility","visible");
 			$("#outro").css("visibility","visible");
 			reset();
+			exit();
 		}
 	};
+	
+	function createTimer() {
+					intervalVar = setInterval(function () {
+					makeWhite(235, mazeHeight + 10, 50, 50);
+					if (score < 1) {
+						makeWhite(0, 0, canvas.width, canvas.height);
+						context.font = "40px Arial";
+						context.fillStyle = "red";
+						context.textAlign = "center";
+						context.textBaseline = "middle";
+						context.fillText("Carbon Time's Up!", 0, 0);
+						return;
+					}
+					context.font = "20px Arial";
+					if (score <= 20 && score > 10) {
+						context.fillStyle = "orangered";
+					}
+					else if (score <= 10) {
+						context.fillStyle = "red";
+						}
+						else {
+							context.fillStyle = "green";
+						}
+						context.textAlign = "center";
+						context.textBaseline = "middle";
+						context.fillText(score, 300, 300)
+						score--;
+					}, 1000);
+				}
+	/*			
+	function draw_anim(context, x, y, iobj) {
+		if (iobj.source != null)
+			context.drawImage(iobj.source, iobj.current * iobj.width, 0,
+							  iobj.width, iobj.height,
+							  x, y, iobj.width, iobj.height);
+		iobj.current = (iobj.current + 1) % iobj.total_frames;
+	}
+	
+	function on_body_load() {
+		setInterval((function (c, i) {
+			return function () {
+				draw_anim(c, character.x, character.y, i);
+			};
+		})(context, characterImage_obj), 600 / 2);
+	}
+	*/
 		
 	var render = function () {
 		if (mazeReady) {
@@ -214,11 +262,7 @@ function loadMaze(mazeImg, bgImg, start, end) {
 	
 		if (characterReady) {
 			context.drawImage(characterImage, character.x, character.y);
-			
-			context.strokeStyle = "red";
-			context.beginPath();
-			context.arc(end.x, end.y, 5, 0, 2*Math.PI);
-			context.stroke();
+			//draw_anim(context, character.x, character.y, characterImage_obj);
 		}
 		
 		if (endReady) {
@@ -226,9 +270,9 @@ function loadMaze(mazeImg, bgImg, start, end) {
 		}
 		
 		if (questionReady) {
-			context.drawImage(questionImage, question1.x, question1.y)
-			context.drawImage(questionImage, question2.x, question2.y)
-			context.drawImage(questionImage, question3.x, question3.y)
+			//context.drawImage(questionImage, question1.x, question1.y)
+			//context.drawImage(questionImage, question2.x, question2.y)
+			//context.drawImage(questionImage, question3.x, question3.y)
 		}
 	};
 
@@ -236,7 +280,7 @@ function loadMaze(mazeImg, bgImg, start, end) {
 		var now = Date.now();
 		var delta = now - then;
 		
-		update(delta / 1000);
+		update(delta / 5000);
 		render();
 		
 		then = now;
@@ -251,6 +295,8 @@ function loadMaze(mazeImg, bgImg, start, end) {
 	
 	//Play
 	var then = Date.now();
+	createTimer();
 	reset();
+	
 	main();
 }

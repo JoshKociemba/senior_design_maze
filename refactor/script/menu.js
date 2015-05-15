@@ -26,19 +26,45 @@ $( document ).ready(function() {
 
 	//these variables should be defined for each Maze function, but are currently
 	//global since we don't have different mazes/bgImgs and therefore start/ends yet
-	var mazeImg = "images/maze.png";
-	var bgImg = "images/maze.png"; //this should be background but isn't used now
-	var mazeWidth = 242;
-	var mazeHeight = 242;
+	var fossilMazeImg = "images/fossilMaze.png";
+	var atmoMazeImg = "images/atmoMaze.png";
+	var bioMazeImg = "images/bioMaze.png";
+	var soilMazeImg = "images/soilMaze.png";
+	var mazeWidth = 790;
+	var mazeHeight = 530;
 	var cellNum = 20;
 	var unit = mazeWidth/cellNum;
-	var start = {
-		x: 5*unit+6,
-		y: 2
+	var fossilStart = {
+		x: 49,	//49
+		y: 24	//24
 	};
-	var end = {
-		x: 7*unit+6,
-		y: 12*unit+6
+	var fossilEnd = {
+		x: 20,
+		y: 485
+	};
+	var soilStart = {
+		x: 748,	//748
+		y: 426	//426
+	};
+	var soilEnd = {
+		x: 155,
+		y: 26
+	};
+	var atmoStart = {
+		x: 694, //694
+		y: 23	//23
+	};
+	var atmoEnd = {
+		x: 235,
+		y: 486
+	};
+	var bioStart = {
+		x: 20,	//20
+		y: 104	//104
+	};
+	var bioEnd = {
+		x: 723,
+		y: 26
 	};
 	
 	function showButton(id) {
@@ -56,23 +82,23 @@ $( document ).ready(function() {
 	//MAZE FUNCTIONS//
 	//NOTE: loadMaze is from maze.js
 	function fossilFuelMaze() {
-		loadMaze(mazeImg, bgImg, start, end);
+		loadMaze(fossilMazeImg, fossilStart, fossilEnd);
 		//fuelPlaceMenu();
 	}
 	
 	function soilMaze() {
-		loadMaze(mazeImg, bgImg, start, end);
+		loadMaze(soilMazeImg, soilStart, soilEnd);
 		//placeAtmoMenu();
 	}
 	
 	function atmosphereMaze() {
-		loadMaze(mazeImg, bgImg, start, end);
+		loadMaze(atmoMazeImg, atmoStart, atmoEnd);
 		//atmoBiomassMenu();
 	}
 	
 	function biomassMaze() {
 		console.log("Calling biomass maze");
-		loadMaze(mazeImg, bgImg, start, end);
+		loadMaze(bioMazeImg, bioStart, bioEnd);
 		//endMenu();
 	}
 	
