@@ -13,7 +13,6 @@ fossil_fuel.push({ name: 'fossil_fuel_in',
 					b: 'decomposition of garbage in landfills',
 					c: 'photosynthesis from organisms hundreds of millions of years ago, then heated and compressed over hundreds of millions of years',
 					d: 'combustion in human energy systems (like electricity generation and transportation)',
-					type: 'default',
 					correct: 'c'
 				});
 fossil_fuel.push({ name: 'fossil_fuel_out',
@@ -22,7 +21,6 @@ fossil_fuel.push({ name: 'fossil_fuel_out',
 					b: 'extraction from the ground',
 					c: 'decomposition',
 					d: 'consumption by herbivores',
-					type: 'default',
 					correct: 'a'
 				});
 				
@@ -30,12 +28,11 @@ fossil_fuel.push({ name: 'fossil_fuel_out',
 var atmosphere = [];
 atmosphere.push({ name: 'atmosphere_in',
 					question: 'What are the processes that moves carbon atoms into the atmosphere pool?',  
-					a: 'photosynthesis',
-					b: 'cellular respiration',
-					c: 'biosynthesis',
-					d: 'combustion',
-					type: 'multiple',
-					correct: 'b,d'
+					a: 'photosynthesis and combustion',
+					b: 'cellular respiration and combustion',
+					c: 'biosynthesis and cellular respiration',
+					d: 'combustion and biosynthesis',
+					correct: 'b'
 				});
 atmosphere.push({ name: 'atmosphere_out',
 					question: 'What is the process that moves carbon atoms out of the atmosphere pool?',  
@@ -43,7 +40,6 @@ atmosphere.push({ name: 'atmosphere_out',
 					b: 'photosynthesis',
 					c: 'cellular respiration',
 					d: 'decomposition',
-					type: 'default',
 					correct: 'b'
 				});				
 
@@ -54,17 +50,15 @@ biomass.push({ name: 'biomass_in',
 					b: 'consumption by herbivores',
 					c: 'photosynthesis',
 					d: 'biosynthesis',
-					type: 'default',
 					correct: 'c'
 				});
 biomass.push({ name: 'biomass_out',
 					question: 'What is the process that moves carbon atoms out of the biomass pool?',  
-					a: 'cellular respiration',
-					b: 'consumption by carnivores',
-					c: 'death or defecation',
-					d: 'photosynthesis',
-					type: 'multiple',
-					correct: 'a,c'
+					a: 'cellular respiration and consumption by carnivores',
+					b: 'consumption by carnivores and photosynthesis',
+					c: 'death or defecation and cellular respiration',
+					d: 'photosynthesis and death or defecation',
+					correct: 'c'
 				});
 
 var soil = [];
@@ -74,7 +68,6 @@ soil.push({ name: 'soil_in',
 					b: 'cellular respiration',
 					c: 'photosynthesis',
 					d: 'biosynthesis',
-					type: 'default',
 					correct: 'a'
 				});
 soil.push({ name: 'soil_out',
@@ -83,6 +76,5 @@ soil.push({ name: 'soil_out',
 					b: 'biosynthesis',
 					c: 'death or defecation',
 					d: 'photosynthesis',
-					type: 'multiple',
 					correct: 'a'
 				});						
