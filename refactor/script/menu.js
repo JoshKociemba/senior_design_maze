@@ -134,6 +134,11 @@ $( document ).ready(function() {
 	};
 	
 	document.getElementById('play-again').onclick = function() {
+		$(".button").css("visibility","hidden");
+		$(".screen").css("visibility","hidden");
+		$(".arrow").css("visibility","hidden");
+		$("#main-screen").css("visibility","visible");
+		$("#instructions").css("visibility","visible");
 	   startGame();
 	};
 	
