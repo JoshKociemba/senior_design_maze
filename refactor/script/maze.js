@@ -202,8 +202,9 @@ function loadMaze(mazeImg, start, end) {
 			makeWhite(0, 0, canvas.width, canvas.height);
 			$(".menu").css("visibility","hidden");
 			$("#game").css("visibility","hidden");
-			$("#dummy-outro-q").css("visibility","visible");
-			$("#outro").css("visibility","visible");
+			$("#outro-q").css("visibility","visible");
+			$("#check1").css("visibility","visible");
+			$("#container").css("visibility","visible");
 			reset();
 			exit();
 		}
@@ -292,6 +293,7 @@ function loadMaze(mazeImg, start, end) {
 	//Cross browser crap
 	var w = window;
 	requestAnimationFrame = w.requestAnimationFrame || w.webkitRequestAnimationFrame || w.msRequestAnimationFrame || w.mozRequestAnimationFrame;
+
 	
 	//Play
 	var then = Date.now();

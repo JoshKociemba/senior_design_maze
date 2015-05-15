@@ -5,6 +5,7 @@
 	<link rel="stylesheet" type="text/css" href="style/main.css">
 	<script src="script/maze.js"></script>
 	<script src="script/menu.js"></script>
+	<script src="script/questions.js"></script>
 	
 	<title>Capstone HTML5 Maze</title>
 </head>
@@ -28,15 +29,25 @@
 			<div class="pink button" id="soil">Continue</div>
 			<div class="pink button" id="finish">Finish</div>
 		</div>
-		<div class="screen" id="dummy-intro-q">
-			<div class="pink button" id="intro">Continue</div>
+		<div class="menu screen" id="intro-q">
+			<div class="questions_intro"></div>
+			<div id ="container">
+				<div id="correct" >Correct!</div>
+				<div id="incorrect" >Incorrect</div>
+			</div>
+			<div class="pink button" id="intro" >Continue</div>
 		</div>
-		<div class="screen" id="dummy-outro-q">
+		<div class="menu screen" id="outro-q">
+			<div class="questions_outro"></div>
+			<div id ="container">
+				<div id="correcto" >Correct!</div>
+				<div id="incorrecto" >Incorrect</div>
+			</div>
 			<div class="pink button" id="outro">Continue</div>
 		</div>
 		<div class="menu screen" id="end-screen">
 			<h1>There's another carbon molecule in the atmosphere!</h1>
-			<p>Due to how our current energy system is set up, a lot of carbon is released into
+			<p class='p_standard' class='p_standard'>Due to how our current energy system is set up, a lot of carbon is released into
 				the atmosphere. We also have reasons to believe that Earth will never have the
 				conditions to create our fossil fuel resources again. Because of this we want
 				to look into renewable resources and limit our consumption of fossil fuels!
@@ -46,12 +57,11 @@
 		</div>
 		<div class="menu screen" id="continue-menu">
 			<h1>Congratulations!</h1>
-			<p>You finished the maze in enough time! Are you ready for the next maze?<p>
 			<div class="button" id="continue">CONTINUE</div>
 		</div>
 		<div class="menu screen" id="try-again-menu">
 			<h1>Carbon TIME's out!</h1>
-			<p>You didn't finish this maze in the time alotted. Please try it again! In
+			<p class='p_standard'>You didn't finish this maze in the time alotted. Please try it again! In
 				order to get more "Carbon TIME" answer the questions correctly. Good
 				luck!
 			</p>
@@ -59,8 +69,16 @@
 		</div>
 		<div class="menu screen" id="credits-menu">
 			<h1>Credits</h1>
-			<p>Katie Hughes</p><p>Joshua Kociemba</p><p>Tony Twyman</p>
+			<p class="p1">Katie Hughes</p><p class="p1">Joshua Kociemba</p><p class="p1">Tony Twyman</p>
+			<p class="p2">Special Thanks To</p>
+			<p class="p1">Energize Corvallis</p><p class="p1">Oregon State University</p><br>
 			<div class="button" id="credits-back">Back</div>
+		</div>
+		<div class="menu screen" id="instruction-menu">
+			<h1>Instructions</h1>
+			<p class="p2">Maze Controls</p><p class='p1'> In the maze the character can be controlled using the arrow keys or W A S D. Using two diagonal keys simultaneously allows movement at 45 degree angles.</p>
+			<p class="p2">Goal</p><p class='p1'>The goal of the game is to complete a full carbon cycle. This is done by answering all the questions correctly and completing each maze. The exit in each maze is marked with a red flag.</p>
+			<div class="button" id="instruc-back">Back</div>
 		</div>
 		<div class="menu screen" id="leader-menu">
 			<?php include 'topscores.php';?>

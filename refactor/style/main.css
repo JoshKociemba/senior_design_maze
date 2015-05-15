@@ -17,7 +17,6 @@
 	background-image: url("../images/faded_full.png");
 	background-size: 790px 530px;
 	background-repeat: no-repeat;
-	text-align: center;
 	margin: 0 auto;
 }
 
@@ -47,11 +46,25 @@ h1{
 	text-align: center;
 }
 
-p{
+.p_standard{
 	font-family: Times, serif;
 	padding: 0 3em 1em 3em;
 	font-size: 1.2em;
 	text-align: center;
+}
+
+.p_question{
+	font-family: Times, serif;
+	padding: 0 3em 1em 3em;
+	font-size: 1.4em;
+	text-align: center;
+}
+
+p{
+	font-family: Times, serif;
+	padding: 0 3em 1em 3em;
+	font-size: 1.2em;
+	text-align:center
 }
 
 .p1{
@@ -134,6 +147,41 @@ a .button{
 	left: 14.5%;
 }
 
+.button#check {
+	margin-top: 1cm;
+	margin-left: 9.2cm;
+	position: static;
+}
+
+.button#check1 {
+	margin-top: 1cm;
+	margin-left: 9.2cm;
+	position: static;
+}
+
+.button#intro {
+	margin-top: 2.5cm;
+	margin-left: 8.9cm;
+	position: absolute;
+}
+
+.button#outro {
+	margin-top: 2.5cm;
+	margin-left: 8.9cm;
+	position: absolute;
+}
+
+.button#credits-back {
+	margin-left: 9.1cm;
+	position: absolute;
+}
+
+.button#instruc-back {
+	margin-top: 1cm;
+	margin-left: 9.2cm;
+	position: absolute;
+}
+
 .quadrant .button {
 	position: absolute;
 	top: 40%;
@@ -204,4 +252,34 @@ canvas {
 	margin-right: auto;
 	display: block;
 }
+
+form#quiz{
+	margin-top: 1cm;
+}
+
+label{
+	display: inline-block;
+	font-size: 1.15em;
+	margin-top:1em;
+}
+
+input[type="radio"]{
+	vertical-align: middle;
+	display: inline-block;
+	margin-left: .5cm;
+}
+
+#container{
 	
+}
+
+#correcto,
+#incorrecto,
+#correct,
+#incorrect{
+	position: absolute;
+	visibility: hidden;
+	font-size: 2.5em;
+	margin-left: 8.8cm;
+	margin-top:.5cm;
+}

@@ -11,7 +11,9 @@ $( document ).ready(function() {
 					"#soil-atmo",
 					"#bio-atmo"
 				];
-	
+
+	var qs = [fossil_fuel,atmosphere,biomass,soil];
+			  
 	var arrow_bool = [0,0,0,0,0];
 	var next_bool = [0,0,0,0,0];
 	var FF_ATMO = 0;
@@ -101,15 +103,67 @@ $( document ).ready(function() {
 		loadMaze(bioMazeImg, bioStart, bioEnd);
 		//endMenu();
 	}
-	
+
+	//QUESTION FUNCTIONS//
+	function loadQuestion_intro(index, io){
+		q = qs[index]
+ 		$(".questions_intro").append("<form id='quiz'>\
+								<p class='p_question'>" + q[io].question + "</p>\
+								<label><input type='radio' name='q1' value='a' checked>" + q[io].a + "</input></label><br>\
+								<label><input type='radio' name='q1' value='b'>" + q[io].b + "</input></label><br>\
+								<label><input type='radio' name='q1' value='c'>" + q[io].c + "</input></label><br>\
+								<label><input type='radio' name='q1' value='d'>" + q[io].d + "</input></label><br>\
+								<input type='button'class='button' value='submit' id='check' visibility='visible' position='static'></input>\
+							</form>");
+
+	$("#check").click(function(event) {
+		var ans = $('#quiz').serialize();
+ 		if (ans == 'q1=' + q[io].correct){
+			$("#intro").css("visibility","visible");
+			$("#correct").css("visibility","visible");
+			$("#incorrect").css("visibility","hidden");
+			$("#check").css("visibility","hidden");
+			loadQuestion_outro(index, 1);
+		}
+		else{
+			$("#incorrect").css("visibility","visible");
+		}
+	});
+	}
+
+	function loadQuestion_outro(index, io){
+		q = qs[index]
+ 		$(".questions_outro").append("<form id='quiz'>\
+								<p class='p_question'>" + q[io].question + "</p>\
+								<label><input type='radio' name='q1' value='a' checked>" + q[io].a + "</input></label><br>\
+								<label><input type='radio' name='q1' value='b'>" + q[io].b + "</input></label><br>\
+								<label><input type='radio' name='q1' value='c'>" + q[io].c + "</input></label><br>\
+								<label><input type='radio' name='q1' value='d'>" + q[io].d + "</input></label><br>\
+								<input type='button'class='button' value='submit' id='check1' visibility='visible' position='static'></input>\
+							</form>");
+
+	$("#check1").click(function(event) {
+		var ans = $('#quiz').serialize();
+ 		if (ans == 'q1=' + q[io].correct){
+			$("#outro").css("visibility","visible");
+			$("#correcto").css("visibility","visible");
+			$("#incorrecto").css("visibility","hidden");
+			$("#check1").css("visibility","hidden");
+		}
+		else{
+			$("#incorrecto").css("visibility","visible");
+		}
+	});
+	}
 	
 	//SET MENU BUTTON LISTENERS//
  	document.getElementById('fossil-fuel').onclick = function() {
 		$(".button").css("visibility","hidden");
 		$(".screen").css("visibility","hidden");
 		$(".arrow").css("visibility","hidden");
-		$("#dummy-intro-q").css("visibility","visible");
-		$("#intro").css("visibility","visible");
+		loadQuestion_intro(0,0);
+		$("#intro-q").css("visibility","visible");
+		$("#intro").css("visibility","hidden");
 		next_bool[FF_ATMO] = 1;
 		arrow_bool[FF_ATMO] = 1;
 	};
@@ -118,8 +172,9 @@ $( document ).ready(function() {
 		$(".button").css("visibility","hidden");
 		$(".screen").css("visibility","hidden");
 		$(".arrow").css("visibility","hidden");
-		$("#dummy-intro-q").css("visibility","visible");
-		$("#intro").css("visibility","visible");
+		loadQuestion_intro(1,0);
+		$("#intro-q").css("visibility","visible");
+		$("#intro").css("visibility","hidden");
 		next_bool[ATMO_BIO] = 1;
 		arrow_bool[ATMO_BIO] = 1;
 	};
@@ -140,8 +195,9 @@ $( document ).ready(function() {
 			console.log("bio->atmo next");
 		}
 		
-		$("#dummy-intro-q").css("visibility","visible");
-		$("#intro").css("visibility","visible");
+		loadQuestion_intro(2,0);
+		$("#intro-q").css("visibility","visible");
+		$("#intro").css("visibility","hidden");
 		atmoVsoil++;
 	};
 	
@@ -149,14 +205,20 @@ $( document ).ready(function() {
 		$(".button").css("visibility","hidden");
 		$(".screen").css("visibility","hidden");
 		$(".arrow").css("visibility","hidden");
-		$("#dummy-intro-q").css("visibility","visible");
-		$("#intro").css("visibility","visible");
+		loadQuestion_intro(3,0);
+		$("#intro-q").css("visibility","visible");
+		$("#intro").css("visibility","hidden");
 		next_bool[SOIL_ATMO] = 1;
 		arrow_bool[SOIL_ATMO] = 1;
 	};
 	
  	document.getElementById('credits-end').onclick = function() {
-	   showButton("#credits-menu");
+ 		$(".button").css("visibility","hidden");
+		$(".screen").css("visibility","hidden");
+		$(".arrow").css("visibility","hidden");
+	    $("#credits-menu").css("visibility","visible");
+	    $("#credits-back").css("visibility","visible");
+	    
 	};
 	
 	document.getElementById('play-again').onclick = function() {
@@ -168,10 +230,39 @@ $( document ).ready(function() {
 	   startGame();
 	};
 	
-	/* document.getElementById('credits-back').onclick = function() {
-	   showButton("#main-menu");
+	 document.getElementById('credits-back').onclick = function() {
+	    $(".button").css("visibility","hidden");
+		$(".screen").css("visibility","hidden");
+		$(".arrow").css("visibility","hidden");
+		$("#credits-menu").css("visibility","hidden");
+	    $("#credits-back").css("visibility","hidden");
+		$("#end-screen").css("visibility","visible");
+		$("#play-again").css("visibility","visible");
+		$("#credits-end").css("visibility","visible");
+	};
+
+	document.getElementById('instructions').onclick = function() {
+		$(".button").css("visibility","hidden");
+		$(".screen").css("visibility","hidden");
+		$(".arrow").css("visibility","hidden");
+		$("#instruction-menu").css("visibility","visible");
+		$("#instructions").css("visibility","hidden");
+		$("#instruc-back").css("visibility","visible");
+		next_bool[FF_ATMO] = 1;
+		arrow_bool[FF_ATMO] = 1;
 	};
 	
+	document.getElementById('instruc-back').onclick = function() {
+		$(".button").css("visibility","hidden");
+		$(".screen").css("visibility","hidden");
+		$(".arrow").css("visibility","hidden");
+		$("#instructions").css("visibility","visible");
+		$("#main-screen").css("visibility","visible");
+		showButton("#fossil-fuel");
+		next_bool[FF_ATMO] = 1;
+		arrow_bool[FF_ATMO] = 1;
+	};
+	/*
 	document.getElementById('leader-start').onclick = function() {
 	   showButton("#leader-menu");
 	};
@@ -190,7 +281,10 @@ $( document ).ready(function() {
 	document.getElementById('intro').onclick = function() {
 		var pos = 0;
 		var bool = 0;
+		$(".questions_intro").empty();
 		$(".button").css("visibility","hidden");
+		$("#container").css("visibility","hidden");
+		$("#correct").css("visibility","hidden");
 		$(".screen").css("visibility","hidden");
 		console.log("intro button clicked");
 		while (!bool && pos < next_bool.length){
@@ -224,8 +318,11 @@ $( document ).ready(function() {
 		var pos = 0;
 		var bool = 0;
 		var a = 0;
+		$(".questions_outro").empty();
 		$(".screen").css("visibility","hidden");
 		$(".button").css("visibility","hidden");
+		$("#container").css("visibility","hidden");
+		$("#correcto").css("visibility","hidden");
 		console.log(arrow_bool);
 		
 		while (pos < arrow_bool.length){
@@ -291,7 +388,6 @@ $( document ).ready(function() {
 		$(".button").css("visibility","hidden");
 		$(".screen").css("visibility","hidden");
 		$(".arrow").css("visibility","hidden");
-		
 		$("#end-screen").css("visibility","visible");
 		$("#play-again").css("visibility","visible");
 		$("#credits-end").css("visibility","visible");
