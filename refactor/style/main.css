@@ -6,11 +6,19 @@
 	margin: 0 auto;
 }
 
-.screen, .menu{
+.screen{
 	visibility: hidden;
 	position: absolute;
 	width:790px;
 	height: 530px;
+}
+
+.menu {
+	background-image: url("../images/faded_full.png");
+	background-size: 790px 530px;
+	background-repeat: no-repeat;
+	text-align: center;
+	margin: 0 auto;
 }
 
 #main-screen{
@@ -80,6 +88,11 @@ p{
 	margin-right: auto;
 	cursor: pointer;
 	position: absolute;
+}
+
+.menu .button {
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .button:hover {

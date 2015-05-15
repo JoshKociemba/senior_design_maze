@@ -129,9 +129,9 @@ $( document ).ready(function() {
 		arrow_bool[SOIL_ATMO] = 1;
 	};
 	
-/* 	document.getElementById('credits-end').onclick = function() {
+ 	document.getElementById('credits-end').onclick = function() {
 	   showButton("#credits-menu");
-	}; */
+	};
 	
 	document.getElementById('play-again').onclick = function() {
 	   startGame();
@@ -192,12 +192,16 @@ $( document ).ready(function() {
 	document.getElementById('outro').onclick = function() {
 		var pos = 0;
 		var bool = 0;
+		var a = 0;
 		$(".screen").css("visibility","hidden");
 		$(".button").css("visibility","hidden");
 		console.log(arrow_bool);
+		
 		while (pos < arrow_bool.length){
-			if (arrow_bool[pos])
+			if (arrow_bool[pos]) {
 				$(arrows[pos]).css("visibility","visible");
+				a++;
+			}
 			pos++;
 		}
 		$("#main-screen").css("visibility","visible");
@@ -207,6 +211,8 @@ $( document ).ready(function() {
 			pos++;
 		}
 		pos--;
+		console.log(arrows.length);
+		console.log(a);
 		if (pos < next_bool.length) {
 			switch (pos) {
 				case FF_ATMO:
@@ -223,11 +229,15 @@ $( document ).ready(function() {
 					next_bool[BIO_SOIL] = 0;
 					break; 
 				case SOIL_ATMO:
-					showButton("#atmosphere");
+					if (a == arrows.length)
+						showButton("#finish");
+					else showButton("#atmosphere");
 					next_bool[SOIL_ATMO] = 0;
 					break;
 				 case BIO_ATMO:
-					showButton("#atmosphere");
+					if (a == arrows.length)
+						showButton("#finish");
+					else showButton("#atmosphere");
 					console.log("in bio->atmo");
 					next_bool[BIO_ATMO] = 0;
 					break;
@@ -246,9 +256,21 @@ $( document ).ready(function() {
 		showButton(buttons[x]);
 	};
 	
+	document.getElementById('finish').onclick = function() {
+		$(".button").css("visibility","hidden");
+		$(".screen").css("visibility","hidden");
+		$(".arrow").css("visibility","hidden");
+		
+		$("#end-screen").css("visibility","visible");
+		$("#play-again").css("visibility","visible");
+		$("#credits-end").css("visibility","visible");
+	};
+	
 
 	//START GAME & FOSSIL FUEL MENU//
 	function startGame() {
+		for (var i = 0; i < arrow_bool.length; i++) arrow_bool[i] = 0;
+		for (var i = 0; i < next_bool.length; i++) next_bool[i] = 0;
 		showButton("#fossil-fuel");
 	}
 	
