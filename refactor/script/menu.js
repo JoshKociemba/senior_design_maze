@@ -37,7 +37,7 @@ $( document ).ready(function() {
 	var cellNum = 20;
 	var unit = mazeWidth/cellNum;
 	var fossilStart = {
-		x: 49,	//49
+		x: 47,	//49
 		y: 24	//24
 	};
 	var fossilEnd = {

@@ -10,6 +10,7 @@ function loadMaze(mazeImg, start, end) {
 	canvas.width = 790;
 	canvas.height = 530;
 	
+	/*
 	var characterImage_obj = {
 		'source': null,
 		'current': 1,
@@ -17,6 +18,7 @@ function loadMaze(mazeImg, start, end) {
 		'width': 24,
 		'height': 24
 	};
+	*/
 	
 	console.log("Start: (" + start.x + ", " + start.y + ")");
 	console.log("End: (" + end.x + ", " + end.y + ")");
@@ -40,7 +42,7 @@ function loadMaze(mazeImg, start, end) {
 	var characterReady = false;
 	var characterImage = new Image();
 	characterImage.onload = function () {
-		characterImage_obj.source = characterImage;
+		//characterImage_obj.source = characterImage;
 		characterReady = true;
 	};
 	//characterImage.src = "images/sprite_sheet.png";
@@ -64,7 +66,7 @@ function loadMaze(mazeImg, start, end) {
 	
 	//Game Objects
 	var character = {
-		speed: 500
+		speed: 150
 	};
 	var question1 = {};
 	var question2 = {};
@@ -113,23 +115,28 @@ function loadMaze(mazeImg, start, end) {
 	
 	
 	var collisiondetect = function(destX, destY) {
-		var spritewidth = 22;
-		var spriteheight = 24;
-		var imgData = context.getImageData(destX, destY, spritewidth, spriteheight);
+		var spritewidth = 20;
+		var spriteheight = 20;
+		var imgData = context.getImageData(destX, destY, spritewidth, spriteheight); //(sx,sy,sw,sh)
+		var overlapData = context.getImageData(character.x, character.y, spritewidth, spriteheight);
 		var data = imgData.data;
+		var overlapData = overlapData.data;
 		var canmove = 1;
 		if (destX >= 0 && destX <= mazeWidth - spritewidth && destY >= 0 && destY <= mazeHeight - spriteheight) { // check whether the rectangle would move inside the bounds of the canvas
 			for (var i = 0; i < 4 * spritewidth * spriteheight; i += 4) { // look at all pixels
+				if (overlapData[i] === 0 && overlapData[i + 1] === 0 && overlapData[i + 2] === 0) {
+						canmove = 1; // character stuck on wall
+						break;
+				}
 				if (data[i] === 0 && data[i + 1] === 0 && data[i + 2] === 0) { // black
 					canmove = 0; // 0 means: the rectangle can't move
 					break;
-				}	
+				}
 			}
 		}
 		else {
 			canmove = 0;
 		}
-		
 		return canmove;
 	};
 	
@@ -209,7 +216,7 @@ function loadMaze(mazeImg, start, end) {
 			exit();
 		}
 	};
-	
+	/*
 	function createTimer() {
 					intervalVar = setInterval(function () {
 					makeWhite(235, mazeHeight + 10, 50, 50);
@@ -238,7 +245,9 @@ function loadMaze(mazeImg, start, end) {
 						score--;
 					}, 1000);
 				}
-	/*			
+	*/
+	
+/*	
 	function draw_anim(context, x, y, iobj) {
 		if (iobj.source != null)
 			context.drawImage(iobj.source, iobj.current * iobj.width, 0,
@@ -252,7 +261,7 @@ function loadMaze(mazeImg, start, end) {
 			return function () {
 				draw_anim(c, character.x, character.y, i);
 			};
-		})(context, characterImage_obj), 600 / 2);
+		})(context, characterImage_obj), 20/2);
 	}
 	*/
 		
@@ -281,7 +290,7 @@ function loadMaze(mazeImg, start, end) {
 		var now = Date.now();
 		var delta = now - then;
 		
-		update(delta / 5000);
+		update(delta / 1000);
 		render();
 		
 		then = now;
@@ -297,7 +306,7 @@ function loadMaze(mazeImg, start, end) {
 	
 	//Play
 	var then = Date.now();
-	createTimer();
+	//createTimer();
 	reset();
 	
 	main();
