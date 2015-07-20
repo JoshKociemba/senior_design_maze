@@ -71,7 +71,7 @@ soil.push({ name: 'soil_in',
 					correct: 'a'
 				});
 soil.push({ name: 'soil_out',
-					question: 'What is the process that moves carbon atoms out of the biomass pool?',  
+					question: 'What is the process that moves carbon atoms out of the soil pool?',  
 					a: 'cellular respiration by decomposers',
 					b: 'biosynthesis',
 					c: 'death or defecation',
